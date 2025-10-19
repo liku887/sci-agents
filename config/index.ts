@@ -3,7 +3,7 @@ export const APP_ID = `${process.env.NEXT_PUBLIC_APP_ID}`
 export const API_KEY = `${process.env.NEXT_PUBLIC_APP_KEY}`
 export const API_URL = `${process.env.NEXT_PUBLIC_API_URL}`
 export const APP_INFO: AppInfo = {
-  title: 'Chat APP',
+  title: '科研智能体',
   description: '',
   copyright: '',
   privacy_policy: '',
@@ -11,7 +11,7 @@ export const APP_INFO: AppInfo = {
   disable_session_same_site: false, // set it to true if you want to embed the chatbot in an iframe
 }
 
-export const isShowPrompt = true
+export const isShowPrompt = false
 export const promptTemplate = 'I want you to act as a javascript console.'
 
 export const API_PREFIX = '/api'

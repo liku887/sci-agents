@@ -15,6 +15,7 @@ const AppIcon: FC<AppIconProps> = ({
   rounded = false,
   background,
   className,
+  icon = '/favicon.ico', // 默认使用 public/favicon.ico
 }) => {
   return (
     <span
@@ -26,10 +27,12 @@ const AppIcon: FC<AppIconProps> = ({
       )}
       style={{
         background,
+        backgroundImage: `url(${icon})`,
+        backgroundSize: 'contain',
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
       }}
-    >
-      🤖
-    </span>
+    />
   )
 }
 
