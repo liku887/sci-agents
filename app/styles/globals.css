@@ -118,7 +118,7 @@ a {
 }
 
 .link {
-  @apply text-blue-600 cursor-pointer hover:opacity-80 transition-opacity duration-200 ease-in-out;
+  @apply text-primary-600 cursor-pointer hover:opacity-80 transition-opacity duration-200 ease-in-out;
 }
 
 .text-gradient {

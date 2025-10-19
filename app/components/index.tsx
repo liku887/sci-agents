@@ -9,7 +9,7 @@ import Toast from '@/app/components/base/toast'
 import Sidebar from '@/app/components/sidebar'
 import ConfigSence from '@/app/components/config-scence'
 import Header from '@/app/components/header'
-import { fetchAppParams, fetchChatList, fetchConversations, generationConversationName, sendChatMessage, updateFeedback } from '@/service'
+import { fetchAppParams, fetchChatList, fetchConversations, generationConversationName, sendChatMessage, updateFeedback, deleteConversation } from '@/service'
 import type { ChatItem, ConversationItem, Feedbacktype, PromptConfig, VisionFile, VisionSettings } from '@/types/app'
 import type { FileUpload } from '@/app/components/base/file-uploader-in-attachment/types'
 import { Resolution, TransferMethod, WorkflowRunningStatus } from '@/types/app'
@@ -51,7 +51,7 @@ const Main: FC<IMainProps> = () => {
   const [fileConfig, setFileConfig] = useState<FileUpload | undefined>()
 
   useEffect(() => {
-    if (APP_INFO?.title) { document.title = `${APP_INFO.title} - Powered by Dify` }
+    if (APP_INFO?.title) { document.title = `${APP_INFO.title} - e2lab` }
   }, [APP_INFO?.title])
 
   // onData change thought (the produce obj). https://github.com/immerjs/immer/issues/576
@@ -85,11 +85,10 @@ const Main: FC<IMainProps> = () => {
   const [conversationIdChangeBecauseOfNew, setConversationIdChangeBecauseOfNew, getConversationIdChangeBecauseOfNew] = useGetState(false)
   const [isChatStarted, { setTrue: setChatStarted, setFalse: setChatNotStarted }] = useBoolean(false)
   const handleStartChat = (inputs: Record<string, any>) => {
-    createNewChat()
-    setConversationIdChangeBecauseOfNew(true)
+    // 开始对话仅进入聊天态，不在侧边栏创建占位会话
     setCurrInputs(inputs)
     setChatStarted()
-    // parse variables in introduction
+    // 解析并展示开场白
     setChatList(generateNewChatListWithOpenStatement('', inputs))
   }
   const hasSetInputs = (() => {
@@ -166,6 +165,23 @@ const Main: FC<IMainProps> = () => {
     // trigger handleConversationSwitch
     setCurrConversationId(id, APP_ID)
     hideSidebar()
+  }
+
+  /* 新增：删除会话 */
+  const handleDeleteConversation = async (id: string) => {
+    try {
+      await deleteConversation(id)
+      const { data: conversations }: any = await fetchConversations()
+      setConversationList(conversations)
+      if (currConversationId === id) {
+        const nextId = conversations?.[0]?.id || '-1'
+        setCurrConversationId(nextId, APP_ID)
+      }
+      Toast.notify({ type: 'success', message: '已删除' })
+    }
+    catch (e) {
+      Toast.notify({ type: 'error', message: '删除失败' })
+    }
   }
 
   /*
@@ -276,8 +292,7 @@ const Main: FC<IMainProps> = () => {
         })
         setConversationList(conversations as ConversationItem[])
 
-        if (isNotNewConversation) { setCurrConversationId(_conversationId, APP_ID, false) }
-
+        // Do not restore last conversation on refresh; stay at start page
         setInited(true)
       }
       catch (e: any) {
@@ -463,15 +478,20 @@ const Main: FC<IMainProps> = () => {
       async onCompleted(hasError?: boolean) {
         if (hasError) { return }
 
-        if (getConversationIdChangeBecauseOfNew()) {
-          const { data: allConversations }: any = await fetchConversations()
-          const newItem: any = await generationConversationName(allConversations[0].id)
-
-          const newAllConversations = produce(allConversations, (draft: any) => {
-            draft[0].name = newItem.name
-          })
-          setConversationList(newAllConversations as any)
+        // 完成后同步会话列表，并为新会话生成名称
+        const { data: allConversations }: any = await fetchConversations()
+        let updatedConversations = allConversations
+        if (tempNewConversationId) {
+          try {
+            const newItem: any = await generationConversationName(tempNewConversationId)
+            updatedConversations = produce(allConversations, (draft: any) => {
+              const idx = draft.findIndex((c: any) => c.id === tempNewConversationId)
+              if (idx >= 0) { draft[idx].name = newItem.name }
+            })
+          } catch {}
         }
+        setConversationList(updatedConversations as any)
+
         setConversationIdChangeBecauseOfNew(false)
         resetNewConversationInputs()
         setChatNotStarted()
@@ -646,6 +666,7 @@ const Main: FC<IMainProps> = () => {
         onCurrentIdChange={handleConversationIdChange}
         currentId={currConversationId}
         copyRight={APP_INFO.copyright || APP_INFO.title}
+        onDeleteConversation={handleDeleteConversation}
       />
     )
   }
@@ -655,7 +676,7 @@ const Main: FC<IMainProps> = () => {
   if (!APP_ID || !APP_INFO || !promptConfig) { return <Loading type='app' /> }
 
   return (
-    <div className='bg-gray-100'>
+    <div className='bg-primary-50'>
       <Header
         title={APP_INFO.title}
         isMobile={isMobile}
@@ -673,18 +694,20 @@ const Main: FC<IMainProps> = () => {
           </div>
         )}
         {/* main */}
-        <div className='flex-grow flex flex-col h-[calc(100vh_-_3rem)] overflow-y-auto'>
-          <ConfigSence
-            conversationName={conversationName}
-            hasSetInputs={hasSetInputs}
-            isPublicVersion={isShowPrompt}
-            siteInfo={APP_INFO}
-            promptConfig={promptConfig}
-            onStartChat={handleStartChat}
-            canEditInputs={canEditInputs}
-            savedInputs={currInputs as Record<string, any>}
-            onInputsChange={setCurrInputs}
-          ></ConfigSence>
+        <div className={`flex-grow flex flex-col h-[calc(100vh_-_3rem)] overflow-y-auto ${!hasSetInputs ? 'items-center justify-center' : ''}`}>
+          <div className={`${hasSetInputs && chatList.length === 0 ? 'mt-auto mb-auto' : ''}`}>
+            <ConfigSence
+              conversationName={conversationName}
+              hasSetInputs={hasSetInputs}
+              isPublicVersion={isShowPrompt}
+              siteInfo={APP_INFO}
+              promptConfig={promptConfig}
+              onStartChat={handleStartChat}
+              canEditInputs={canEditInputs}
+              savedInputs={currInputs as Record<string, any>}
+              onInputsChange={setCurrInputs}
+            ></ConfigSence>
+          </div>
 
           {
             hasSetInputs && (
@@ -701,6 +724,7 @@ const Main: FC<IMainProps> = () => {
               </div>)
           }
         </div>
+
       </div>
     </div>
   )

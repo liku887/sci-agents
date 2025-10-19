@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next'
 import {
   ChatBubbleOvalLeftEllipsisIcon,
   PencilSquareIcon,
+  TrashIcon,
 } from '@heroicons/react/24/outline'
 import { ChatBubbleOvalLeftEllipsisIcon as ChatBubbleOvalLeftEllipsisSolidIcon } from '@heroicons/react/24/solid'
+import { LightBulbIcon, MagnifyingGlassCircleIcon, BeakerIcon, DocumentTextIcon, ChartBarIcon, ChevronRightIcon } from '@heroicons/react/24/outline'
 import Button from '@/app/components/base/button'
 // import Card from './card'
 import type { ConversationItem } from '@/types/app'
@@ -21,15 +23,57 @@ export interface ISidebarProps {
   currentId: string
   onCurrentIdChange: (id: string) => void
   list: ConversationItem[]
+  onDeleteConversation?: (id: string) => void
 }
+
+const assistantMenus = [
+  { id: 'assistant-topic', label: '研究选题助手', Icon: LightBulbIcon, children: [
+    { id: 'topic-query', label: '检索式' },
+    { id: 'topic-plan', label: '检索计划' },
+    { id: 'topic-keywords', label: '关键词与观点' },
+    { id: 'topic-selection', label: '研究选题' },
+  ] },
+  { id: 'assistant-survey', label: '文献综述助手', Icon: MagnifyingGlassCircleIcon, children: [
+    { id: 'literature-review-guide', label: '文献综述指导' },
+  ] },
+  { id: 'assistant-design', label: '研究设计助手', Icon: BeakerIcon, children: [
+    { id: 'design-hypothesis', label: '假设生成与评估' },
+    { id: 'design-method', label: '引导研究方法选取' },
+    { id: 'design-validation', label: '方案验证与优化' },
+  ] },
+  { id: 'assistant-writing', label: '学术写作助手', Icon: DocumentTextIcon, children: [
+    { id: 'writing-structure', label: '论文结构规划' },
+    { id: 'writing-quality', label: '内容质量诊断' },
+    { id: 'writing-construction', label: '论文建构指导' },
+    { id: 'writing-polish', label: '学术表达润色' },
+    { id: 'writing-charts', label: '图表数据整合支持' },
+    { id: 'writing-references', label: '参考文献格式化' },
+  ] },
+  { id: 'assistant-analysis', label: '数据分析助手', Icon: ChartBarIcon, children: [
+    { id: 'analysis-requirements', label: '需求分析' },
+    { id: 'analysis-adaptation', label: '数据适配' },
+    { id: 'analysis-ideas', label: '思路拆解' },
+    { id: 'analysis-methods', label: '方法匹配' },
+    { id: 'analysis-risk', label: '风险预测' },
+    { id: 'analysis-action', label: '行动落地' },
+  ] },
+]
 
 const Sidebar: FC<ISidebarProps> = ({
   copyRight,
   currentId,
   onCurrentIdChange,
   list,
+  onDeleteConversation,
 }) => {
   const { t } = useTranslation()
+  const [expandedAssistantIds, setExpandedAssistantIds] = React.useState<string[]>([])
+  const toggleAssistant = (id: string) => {
+    // 单展开：点击已展开的助手则收起，否则仅展开当前
+    setExpandedAssistantIds(prev => (
+      prev.includes(id) ? [] : [id]
+    ))
+  }
   return (
     <div
       className="shrink-0 flex flex-col overflow-y-auto bg-white pc:w-[244px] tablet:w-[192px] mobile:w-[240px]  border-r border-gray-200 tablet:h-[calc(100vh_-_3rem)] mobile:h-screen"
@@ -38,28 +82,85 @@ const Sidebar: FC<ISidebarProps> = ({
         <div className="flex flex-shrink-0 p-4 !pb-0">
           <Button
             onClick={() => { onCurrentIdChange('-1') }}
-            className="group block w-full flex-shrink-0 !justify-start !h-9 text-primary-600 items-center text-sm"
+            className="group block w-full flex-shrink-0 !justify-start !h-9 text-[#00A76F] items-center text-sm"
           >
             <PencilSquareIcon className="mr-2 h-4 w-4" /> {t('app.chat.newChat')}
           </Button>
         </div>
       )}
 
-      <nav className="mt-4 flex-1 space-y-1 bg-white p-4 !pt-0">
+      {/* 一级菜单（助手）——移动到新建对话下面 */}
+      <div className="flex flex-shrink-0 p-4 !pb-0">
+        <div className="w-full">
+          <div className="text-xs text-gray-400 mb-2">助手</div>
+          <div className="space-y-1">
+            {assistantMenus.map(({ id, label, Icon, children }) => {
+              const isExpanded = expandedAssistantIds.includes(id)
+              return (
+                <div key={id}>
+                  <div
+                    className={classNames(
+                      'group flex items-center rounded-md px-2 py-2 text-sm font-medium cursor-pointer',
+                      isExpanded ? 'bg-primary-50 text-[#00A76F]' : 'text-gray-700 hover:bg-gray-100 hover:text-gray-700',
+                    )}
+                    onClick={() => toggleAssistant(id)}
+                  >
+                    <Icon
+                      className={classNames(
+                        'mr-3 h-5 w-5 flex-shrink-0',
+                        isExpanded ? 'text-[#00A76F]' : 'text-gray-400 group-hover:text-gray-500',
+                      )}
+                      aria-hidden="true"
+                    />
+                    {label}
+                    <ChevronRightIcon
+                      className={classNames(
+                        'ml-auto h-4 w-4 transition-transform duration-200',
+                        isExpanded ? 'rotate-90 text-[#00A76F]' : 'text-gray-400',
+                      )}
+                    />
+                  </div>
+                  {children && children.length > 0 && isExpanded && (
+                    <div className="ml-8 mt-1 space-y-1">
+                      {children.map(child => (
+                        <div
+                          key={child.id}
+                          className="flex items-center rounded-md px-2 py-1 text-sm cursor-pointer text-gray-600 hover:text-gray-700 hover:bg-gray-50"
+                        >
+                          {child.label}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+
+      {/* 历史对话模块标题 */}
+      <div className="px-4">
+        <div className="border-t border-gray-200 my-2" />
+        <div className="text-xs text-gray-400 mb-2">历史对话</div>
+      </div>
+
+      <nav className="mt-2 flex-1 space-y-1 bg-white p-4 !pt-0">
         {list.map((item) => {
           const isCurrent = item.id === currentId
           const ItemIcon
             = isCurrent ? ChatBubbleOvalLeftEllipsisSolidIcon : ChatBubbleOvalLeftEllipsisIcon
+          const canDelete = item.id !== '-1'
           return (
             <div
-              onClick={() => onCurrentIdChange(item.id)}
               key={item.id}
               className={classNames(
                 isCurrent
                   ? 'bg-primary-50 text-primary-600'
                   : 'text-gray-700 hover:bg-gray-100 hover:text-gray-700',
-                'group flex items-center rounded-md px-2 py-2 text-sm font-medium cursor-pointer',
+                'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
               )}
+              onClick={() => onCurrentIdChange(item.id)}
             >
               <ItemIcon
                 className={classNames(
@@ -70,14 +171,21 @@ const Sidebar: FC<ISidebarProps> = ({
                 )}
                 aria-hidden="true"
               />
-              {item.name}
+              <span className="truncate mr-2">{item.name}</span>
+              {canDelete && (
+                <button
+                  type="button"
+                  className="ml-auto px-2 py-1 rounded hover:bg-gray-200 opacity-0 group-hover:opacity-100"
+                  onClick={(e) => { e.stopPropagation(); onDeleteConversation && onDeleteConversation(item.id) }}
+                  aria-label="删除会话"
+                >
+                  <TrashIcon className="h-4 w-4 text-gray-500" />
+                </button>
+              )}
             </div>
           )
         })}
       </nav>
-      {/* <a className="flex flex-shrink-0 p-4" href="https://langgenius.ai/" target="_blank">
-        <Card><div className="flex flex-row items-center"><ChatBubbleOvalLeftEllipsisSolidIcon className="text-primary-600 h-6 w-6 mr-2" /><span>LangGenius</span></div></Card>
-      </a> */}
       <div className="flex flex-shrink-0 pr-4 pb-4 pl-4">
         <div className="text-gray-400 font-normal text-xs">© {copyRight} {(new Date()).getFullYear()}</div>
       </div>
