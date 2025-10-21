@@ -49,6 +49,45 @@ const Main: FC<IMainProps> = () => {
     transfer_methods: [TransferMethod.local_file],
   })
   const [fileConfig, setFileConfig] = useState<FileUpload | undefined>()
+  const [chatPrefix, setChatPrefix] = useState<string>('')
+
+  const handleMenuSelect = (menuId: string) => {
+    const prefixMap: Record<string, string> = {
+      // 一级菜单
+      'assistant-topic': '【研究选题】',
+      'assistant-survey': '【文献综述】',
+      'assistant-design': '【研究设计】',
+      'assistant-writing': '【学术写作】',
+      'assistant-analysis': '【数据分析】',
+
+      // 二级菜单
+      'topic-query': '【研究选题】检索式',
+      'topic-plan': '【研究选题】检索计划',
+      'topic-keywords': '【研究选题】关键词与观点',
+      'topic-selection': '【研究选题】研究选题',
+
+      'literature-review-guide': '【文献综述】文献综述指导',
+
+      'design-hypothesis': '【研究设计】假设生成与评估',
+      'design-method': '【研究设计】引导研究设计',
+      'design-validation': '【研究设计】方案验证与优化',
+
+      'writing-structure': '【学术写作】论文结构规划',
+      'writing-quality': '【学术写作】内容质量诊断',
+      'writing-construction': '【学术写作】论文写作指导',
+      'writing-polish': '【学术写作】论文语句润色',
+      'writing-charts': '【学术写作】图表数据整合支持',
+      'writing-references': '【学术写作】参考文献格式化',
+
+      'analysis-requirements': '【数据分析】需求分析',
+      'analysis-adaptation': '【数据分析】数据适配',
+      'analysis-ideas': '【数据分析】思路拆解',
+      'analysis-methods': '【数据分析】方法匹配',
+      'analysis-risk': '【数据分析】风险预测',
+      'analysis-action': '【数据分析】行动落地',
+    }
+    setChatPrefix(prefixMap[menuId] || '')
+  }
 
   useEffect(() => {
     if (APP_INFO?.title) { document.title = `${APP_INFO.title} - e2lab` }
@@ -389,10 +428,10 @@ const Main: FC<IMainProps> = () => {
         else { toServerInputs[key] = value }
       })
     }
-
+    const fullMessage = chatPrefix ? `${chatPrefix}\n${message}` : message
     const data: Record<string, any> = {
       inputs: toServerInputs,
-      query: message,
+      query: fullMessage,
       conversation_id: isNewConversation ? null : currConversationId,
     }
 
@@ -667,6 +706,7 @@ const Main: FC<IMainProps> = () => {
         currentId={currConversationId}
         copyRight={APP_INFO.copyright || APP_INFO.title}
         onDeleteConversation={handleDeleteConversation}
+        onMenuSelect={handleMenuSelect}
       />
     )
   }

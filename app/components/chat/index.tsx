@@ -18,7 +18,7 @@ import { useImageFiles } from '@/app/components/base/image-uploader/hooks'
 import FileUploaderInAttachmentWrapper from '@/app/components/base/file-uploader-in-attachment'
 import type { FileEntity, FileUpload } from '@/app/components/base/file-uploader-in-attachment/types'
 import { getProcessedFiles } from '@/app/components/base/file-uploader-in-attachment/utils'
-
+import {  } from '@/app/components/sidebar'
 export interface IChatProps {
   chatList: ChatItem[]
   /**
