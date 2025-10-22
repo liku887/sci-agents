@@ -106,18 +106,18 @@ const Sidebar: FC<ISidebarProps> = ({
   // ✅ 记录当前选中的菜单项（一级或二级）
   const [selectedMenuId, setSelectedMenuId] = React.useState<string | null>(null)
 
-  const toggleAssistant = (id: string) => {
-    setExpandedAssistantIds(prev =>
-      prev.includes(id)
-        ? prev.filter(i => i !== id)
-        : [...prev, id],
-    )
+  const toggleAssistantExpand = (id: string) => {
+    setExpandedAssistantIds(prev => (
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    ))
   }
 
   const handleMenuSelect = (id: string, isParent: boolean) => {
     setSelectedMenuId(id)
-    onMenuSelect?.(id)
-    if (isParent) toggleAssistant(id)
+    if (isParent) {
+      toggleAssistantExpand(id)
+    }
+    onMenuSelect && onMenuSelect(id)
   }
 
   return (
@@ -129,7 +129,8 @@ const Sidebar: FC<ISidebarProps> = ({
             onClick={() => { onCurrentIdChange('-1') }}
             className="group block w-full flex-shrink-0 !justify-start !h-9 items-center text-sm bg-[#DCF5EB]"
           >
-            <PencilSquareIcon className="mr-2 h-4 w-4" /> <span className="text-[#00A76F]">{t('app.chat.newChat')}</span>
+            <PencilSquareIcon className="mr-2 h-4 w-4" />
+            <span className="text-[#00A76F]">{t('app.chat.newChat')}</span>
           </Button>
         </div>
       )}
@@ -154,32 +155,20 @@ const Sidebar: FC<ISidebarProps> = ({
                     )}
                     onClick={() => handleMenuSelect(id, true)}
                   >
-                    <Icon
-                      className={classNames(
-                        'mr-3 h-5 w-5 flex-shrink-0 transition-colors',
-                        isSelected ? 'text-[#00A76F]' : 'text-gray-400 group-hover:text-gray-500',
-                      )}
-                      aria-hidden="true"
-                    />
-                    {label}
-                    <ChevronRightIcon
-                      className={classNames(
-                        'ml-auto h-4 w-4 transition-transform duration-200',
-                        isExpanded ? 'rotate-90 text-[#00A76F]' : 'text-gray-400',
-                      )}
-                    />
+                    <Icon className={classNames('mr-2 h-4 w-4 flex-shrink-0', isSelected ? 'text-[#00A76F]' : 'text-gray-400 group-hover:text-gray-500')} />
+                    <div className="flex-1">{label}</div>
+                    <ChevronRightIcon className={classNames('h-4 w-4 transition-transform', isExpanded ? 'rotate-90' : 'rotate-0')} />
                   </div>
-
                   {/* 二级菜单 */}
-                  {isExpanded && children && children.length > 0 && (
-                    <div className="ml-8 mt-1 space-y-1">
-                      {children.map(child => {
+                  {isExpanded && (
+                    <div className="ml-3 mt-1 space-y-1">
+                      {children.map((child) => {
                         const isChildSelected = selectedMenuId === child.id
                         return (
                           <div
                             key={child.id}
                             className={classNames(
-                              'flex items-center rounded-md px-2 py-1 text-sm cursor-pointer transition-all duration-200',
+                              'group flex items-center rounded-md px-2 py-2 text-sm cursor-pointer',
                               isChildSelected
                                 ? 'bg-primary-50 text-[#00A76F]'
                                 : 'text-gray-600 hover:text-gray-700 hover:bg-gray-50',
