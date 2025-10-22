@@ -19,6 +19,13 @@
 
 .customBtn {
   width: 136px;
+  background-color: #29B47D !important;
+  border-color: #29B47D !important;
+}
+
+.customBtn:hover {
+  background-color: #29B47D !important;
+  filter: brightness(0.95);
 }
 
 .logo {
