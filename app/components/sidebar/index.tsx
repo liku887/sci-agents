@@ -127,9 +127,9 @@ const Sidebar: FC<ISidebarProps> = ({
         <div className="flex flex-shrink-0 p-4 !pb-0">
           <Button
             onClick={() => { onCurrentIdChange('-1') }}
-            className="group block w-full flex-shrink-0 !justify-start !h-9 text-[#00A76F] items-center text-sm"
+            className="group block w-full flex-shrink-0 !justify-start !h-9 items-center text-sm bg-[#DCF5EB]"
           >
-            <PencilSquareIcon className="mr-2 h-4 w-4" /> {t('app.chat.newChat')}
+            <PencilSquareIcon className="mr-2 h-4 w-4" /> <span className="text-[#00A76F]">{t('app.chat.newChat')}</span>
           </Button>
         </div>
       )}
