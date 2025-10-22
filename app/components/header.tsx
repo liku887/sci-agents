@@ -31,7 +31,7 @@ const Header: FC<IHeaderProps> = ({
         : <div></div>}
       <div className='flex items-center space-x-2'>
         <AppIcon size="small" />
-        <div className=" text-sm text-primary-600 font-bold">{title}</div>
+        <div className=" text-sm text-[#00A76F] font-bold">{title}</div>
       </div>
       {isMobile
         ? (
