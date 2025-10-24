@@ -17,6 +17,7 @@ import {
 } from '@heroicons/react/24/solid'
 import Button from '@/app/components/base/button'
 import type { ConversationItem } from '@/types/app'
+import s from './style.module.css'
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -129,7 +130,7 @@ const Sidebar: FC<ISidebarProps> = ({
             onClick={() => { onCurrentIdChange('-1') }}
             className="group block w-full flex-shrink-0 !justify-start !h-9 items-center text-sm bg-[#DCF5EB]"
           >
-            <PencilSquareIcon className="mr-2 h-4 w-4" />
+            <span className={`${s.newChatIcon} mr-2 h-4 w-4`} />
             <span className="text-[#00A76F]">{t('app.chat.newChat')}</span>
           </Button>
         </div>
