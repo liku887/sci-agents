@@ -1,0 +1,5 @@
+.newChatIcon {
+  display: inline-block;
+  background: url(../base/icons/新对话编辑.svg) center center no-repeat;
+  background-size: contain;
+}
