@@ -81,7 +81,7 @@ const Welcome: FC<IWelcomeProps> = ({
 
   const renderHeader = () => {
     return (
-      <div className='absolute top-0 left-0 right-0 flex items-center justify-between border-b border-gray-100 mobile:h-12 tablet:h-16 px-8 bg-[#DCF5EB]'>
+      <div className='absolute top-0 left-0 right-0 flex items-center justify-between border-b border-gray-100 mobile:h-12 tablet:h-16 px-8 bg-white'>
         <div className='text-gray-900'>{conversationName}</div>
       </div>
     )
@@ -289,9 +289,9 @@ const Welcome: FC<IWelcomeProps> = ({
             />
             <PromptTemplate html={highLightPromoptTemplate} />
             {isFold && (
-              <div className='flex items-center justify-between mt-3 border-t border-indigo-100 pt-4 text-xs text-indigo-600'>
-                <span className='text-gray-700'>{t('app.chat.configStatusDes')}</span>
-                <EditBtn onClick={() => setIsFold(false)} />
+              <div className='flex items-center justify-between mt-3 border-t border-indigo-100 pt-4 text-xs'>
+                <span className='text-[#00A76F]'>{t('app.chat.configStatusDes')}</span>
+                <EditBtn className='text-[#00A76F]' onClick={() => setIsFold(false)} />
               </div>
             )}
           </>
@@ -310,12 +310,17 @@ const Welcome: FC<IWelcomeProps> = ({
       <TemplateVarPanel
         isFold={isFold}
         header={
-          <div className='flex items-center justify-between text-indigo-600'>
-            <PanelTitle
-              title={!isFold ? t('app.chat.privatePromptConfigTitle') : t('app.chat.configStatusDes')}
-            />
+          <div className='flex items-center justify-between'>
+            {!isFold ? (
+              <PanelTitle
+                title={t('app.chat.privatePromptConfigTitle')}
+                className='text-[#00A76F]'
+              />
+            ) : (
+              <span className='text-[#00A76F] text-xs'>{t('app.chat.configStatusDes')}</span>
+            )}
             {isFold && (
-              <EditBtn onClick={() => setIsFold(false)} />
+              <EditBtn className='text-[#00A76F]' onClick={() => setIsFold(false)} />
             )}
           </div>
         }
