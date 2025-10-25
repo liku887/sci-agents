@@ -34,11 +34,19 @@ export interface ISidebarProps {
   onMenuSelect?: (menuId: string) => void
 }
 
+const ResearchTopicIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.researchTopicIcon} ${className}`} />
+)
+
+const LiteratureReviewIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.literatureReviewIcon} ${className}`} />
+)
+
 const assistantMenus = [
   {
     id: 'assistant-topic',
     label: '研究选题',
-    Icon: LightBulbIcon,
+    Icon: ResearchTopicIcon,
     children: [
       { id: 'topic-query', label: '检索式' },
       { id: 'topic-plan', label: '检索计划' },
@@ -49,7 +57,7 @@ const assistantMenus = [
   {
     id: 'assistant-survey',
     label: '文献综述',
-    Icon: MagnifyingGlassCircleIcon,
+    Icon: LiteratureReviewIcon,
     children: [
       { id: 'literature-review-guide', label: '文献综述指导' },
     ],
