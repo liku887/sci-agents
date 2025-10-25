@@ -13,3 +13,11 @@
   background-size: contain;
   display: inline-block;
 }
+
+.literatureReviewIcon {
+  background-image: url('../base/icons/文献综述.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
