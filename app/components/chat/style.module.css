@@ -1,6 +1,9 @@
 .answerIcon {
   position: relative;
-  background: url(./icons/robot.svg);
+  background: url(../base/icons/机器人.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
 }
 
 .typeingIcon {
@@ -19,7 +22,9 @@
 
 
 .questionIcon {
-  background: url(./icons/default-avatar.jpg);
+  background: url(../base/icons/用户.svg);
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: contain;
   border-radius: 50%;
 }
