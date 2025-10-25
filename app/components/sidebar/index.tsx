@@ -18,6 +18,9 @@ import {
 import Button from '@/app/components/base/button'
 import type { ConversationItem } from '@/types/app'
 import s from './style.module.css'
+const HistoryConversationIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.historyConversationIcon} ${className}`} />
+)
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(' ')
@@ -218,9 +221,7 @@ const Sidebar: FC<ISidebarProps> = ({
       <nav className="mt-2 flex-1 space-y-1 bg-white p-4 !pt-0">
         {list.map((item) => {
           const isCurrent = item.id === currentId
-          const ItemIcon = isCurrent
-            ? ChatBubbleOvalLeftEllipsisSolidIcon
-            : ChatBubbleOvalLeftEllipsisIcon
+          const ItemIcon = HistoryConversationIcon
           const canDelete = item.id !== '-1'
           return (
             <div
@@ -233,14 +234,7 @@ const Sidebar: FC<ISidebarProps> = ({
               )}
               onClick={() => onCurrentIdChange(item.id)}
             >
-              <ItemIcon
-                className={classNames(
-                  isCurrent
-                    ? 'text-primary-600'
-                    : 'text-gray-400 group-hover:text-gray-500',
-                  'mr-3 h-5 w-5 flex-shrink-0',
-                )}
-              />
+              <ItemIcon className={classNames('mr-3 h-5 w-5 flex-shrink-0')} />
               <span className="truncate mr-2">{item.name}</span>
               {canDelete && (
                 <button
