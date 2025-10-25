@@ -234,7 +234,7 @@ const Sidebar: FC<ISidebarProps> = ({
               )}
               onClick={() => onCurrentIdChange(item.id)}
             >
-              <ItemIcon className={classNames('mr-3 h-5 w-5 flex-shrink-0')} />
+              <ItemIcon className={classNames('mr-3 flex-shrink-0 self-end translate-y-[2px]', item.id === '-1' ? 'h-8 w-8' : 'h-9 w-9')} />
               <span className="truncate mr-2">{item.name}</span>
               {canDelete && (
                 <button
