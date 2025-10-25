@@ -42,6 +42,18 @@ const LiteratureReviewIcon: FC<{ className?: string }> = ({ className = '' }) =>
   <span className={`${s.literatureReviewIcon} ${className}`} />
 )
 
+const ResearchDesignIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.researchDesignIcon} ${className}`} />
+)
+
+const AcademicWritingIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.academicWritingIcon} ${className}`} />
+)
+
+const DataAnalysisIcon: FC<{ className?: string }> = ({ className = '' }) => (
+  <span className={`${s.dataAnalysisIcon} ${className}`} />
+)
+
 const assistantMenus = [
   {
     id: 'assistant-topic',
@@ -65,7 +77,7 @@ const assistantMenus = [
   {
     id: 'assistant-design',
     label: '研究设计',
-    Icon: BeakerIcon,
+    Icon: ResearchDesignIcon,
     children: [
       { id: 'design-hypothesis', label: '假设生成与评估' },
       { id: 'design-method', label: '引导研究设计' },
@@ -75,7 +87,7 @@ const assistantMenus = [
   {
     id: 'assistant-writing',
     label: '学术写作',
-    Icon: DocumentTextIcon,
+    Icon: AcademicWritingIcon,
     children: [
       { id: 'writing-structure', label: '论文结构规划' },
       { id: 'writing-quality', label: '内容质量诊断' },
@@ -88,7 +100,7 @@ const assistantMenus = [
   {
     id: 'assistant-analysis',
     label: '数据分析',
-    Icon: ChartBarIcon,
+    Icon: DataAnalysisIcon,
     children: [
       { id: 'analysis-requirements', label: '需求分析' },
       { id: 'analysis-adaptation', label: '数据适配' },
