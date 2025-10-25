@@ -6,8 +6,8 @@
   display: inline-block;
 }
 
-.researchTopicIcon {
-  background-image: url('../base/icons/研究选题.svg');
+.researchDesignIcon {
+  background-image: url('../base/icons/研究设计.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -16,6 +16,30 @@
 
 .literatureReviewIcon {
   background-image: url('../base/icons/文献综述.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
+
+.academicWritingIcon {
+  background-image: url('../base/icons/学术写作.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
+
+.dataAnalysisIcon {
+  background-image: url('../base/icons/数据分析.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
+
+.researchTopicIcon {
+  background-image: url('../base/icons/研究选题.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
