@@ -1,5 +1,15 @@
 .newChatIcon {
-  display: inline-block;
-  background: url(../base/icons/新对话编辑.svg) center center no-repeat;
+  background-image: url('../base/icons/新对话编辑.svg');
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: contain;
+  display: inline-block;
+}
+
+.researchTopicIcon {
+  background-image: url('../base/icons/研究选题.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
 }
