@@ -34,3 +34,11 @@
   background: url(/favicon.ico) center center no-repeat;
   background-size: contain;
 }
+
+.startChatIcon {
+  background-image: url('../base/icons/历史对话.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  display: inline-block;
+}
