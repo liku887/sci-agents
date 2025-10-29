@@ -14,7 +14,7 @@ export const AppInfoComp: FC<{ siteInfo: AppInfo }> = ({ siteInfo }) => {
   const { t } = useTranslation()
   return (
     <div>
-      <div className='flex items-center py-2 text-xl font-medium text-gray-700 rounded-md bg-[#DCF5EB]'>👏 {t('app.common.welcome')} {siteInfo.title}</div>
+      <div className='flex items-center py-2 text-xl font-medium text-gray-700 rounded-md'>👏 {t('app.common.welcome')} {siteInfo.title}</div>
       <p className='text-sm text-gray-500'>{siteInfo.description}</p>
     </div>
   )
@@ -45,10 +45,10 @@ export const ChatBtn: FC<{ onClick: () => void, className?: string }> = ({
   return (
     <Button
       type='primary'
-      className={cn(className, `space-x-2 flex items-center ${s.customBtn}`)}
+      className={cn(className, `space-x-1 flex items-center ${s.customBtn}`)}
       onClick={onClick}
     >
-      <span className={`${s.startChatIcon} h-9 w-9 -translate-x-[3px] translate-y-[4px] -mr-[1px]`} />
+      <span className={`${s.startChatIcon} h-9 w-9 -translate-x-[12px] translate-y-[4px] -mr-[1px]`} />
       {t('app.chat.startChat')}
     </Button>
   )

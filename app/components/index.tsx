@@ -132,7 +132,6 @@ const Main: FC<IMainProps> = () => {
   }
   const hasSetInputs = (() => {
     if (!isNewConversation) { return true }
-
     return isChatStarted
   })()
 

@@ -3,11 +3,11 @@
 }
 
 .customPrimaryGreen {
-  background-color: #29B47D !important;
-  border-color: #29B47D !important;
+  background-color: #4fb5ff !important;
+  border-color: #4fb5ff !important;
 }
 
 .customPrimaryGreen:hover {
-  background-color: #29B47D !important;
+  background-color: #4fb5ff !important;
   filter: brightness(0.95);
 }

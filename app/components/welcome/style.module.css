@@ -19,12 +19,12 @@
 
 .customBtn {
   width: 136px;
-  background-color: #29B47D !important;
-  border-color: #29B47D !important;
+  background-color: #66b4fa !important;
+  border-color: #66b4fa !important;
 }
 
 .customBtn:hover {
-  background-color: #29B47D !important;
+  background-color: #66b4fa !important;
   filter: brightness(0.95);
 }
 

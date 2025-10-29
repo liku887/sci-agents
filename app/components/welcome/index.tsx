@@ -10,7 +10,7 @@ import type { AppInfo, PromptConfig } from '@/types/app'
 import Toast from '@/app/components/base/toast'
 import Select from '@/app/components/base/select'
 import { DEFAULT_VALUE_MAX_LEN } from '@/config'
-
+import Link from 'next/link';
 // regex to match the {{}} and replace it with a span
 const regex = /\{\{([^}]+)\}\}/g
 
@@ -290,8 +290,8 @@ const Welcome: FC<IWelcomeProps> = ({
             <PromptTemplate html={highLightPromoptTemplate} />
             {isFold && (
               <div className='flex items-center justify-between mt-3 border-t border-indigo-100 pt-4 text-xs'>
-                <span className='text-[#00A76F]'>{t('app.chat.configStatusDes')}</span>
-                <EditBtn className='text-[#00A76F]' onClick={() => setIsFold(false)} />
+                <span className='text-primary-100'>{t('app.chat.configStatusDes')}</span>
+                <EditBtn className='text-primary-100' onClick={() => setIsFold(false)} />
               </div>
             )}
           </>
@@ -314,13 +314,13 @@ const Welcome: FC<IWelcomeProps> = ({
             {!isFold ? (
               <PanelTitle
                 title={t('app.chat.privatePromptConfigTitle')}
-                className='text-[#00A76F]'
+                className='text-gray-900'
               />
             ) : (
-              <span className='text-[#00A76F] text-xs'>{t('app.chat.configStatusDes')}</span>
+              <span className='text-gray-700 text-xs'>{t('app.chat.configStatusDes')}</span>
             )}
             {isFold && (
-              <EditBtn className='text-[#00A76F]' onClick={() => setIsFold(false)} />
+              <EditBtn className='text-gray-700' onClick={() => setIsFold(false)} />
             )}
           </div>
         }
@@ -349,7 +349,7 @@ const Welcome: FC<IWelcomeProps> = ({
         {/*  Has't set inputs  */}
         {
           !hasSetInputs && (
-            <div className='mobile:pt-[72px] tablet:pt-[128px] pc:pt-[200px]'>
+            <div>
               {hasVar
                 ? (
                   renderVarPanel()
@@ -379,10 +379,10 @@ const Welcome: FC<IWelcomeProps> = ({
               </div>
               : <div>
               </div>}
-            <a className='flex items-center pr-3 space-x-0.5' href="https://agents-e2lab.cn/" target="_blank">
+            <Link href="/doc" className='flex items-center pr-3 space-x-0.5'>
               <span className='uppercase'>{t('app.chat.powerBy')}</span>
               <FootLogo />
-            </a>
+            </Link>
           </div>
         )}
       </div>

@@ -151,10 +151,10 @@ const Sidebar: FC<ISidebarProps> = ({
         <div className="flex flex-shrink-0 p-4 !pb-0">
           <Button
             onClick={() => { onCurrentIdChange('-1') }}
-            className="group block w-full flex-shrink-0 !justify-start !h-9 items-center text-sm bg-[#DCF5EB]"
+            className="group block w-full flex-shrink-0 !justify-start !h-9 items-center text-sm bg-white hover:bg-primary-50 transition-colors duration-200"
           >
             <span className={`${s.newChatIcon} mr-2 h-4 w-4`} />
-            <span className="text-[#00A76F]">{t('app.chat.newChat')}</span>
+            <span className="text-primary-600">{t('app.chat.newChat')}</span>
           </Button>
         </div>
       )}
@@ -174,12 +174,12 @@ const Sidebar: FC<ISidebarProps> = ({
                     className={classNames(
                       'group flex items-center rounded-md px-2 py-2 text-sm font-medium cursor-pointer transition-all duration-200',
                       isSelected
-                        ? 'bg-primary-50 text-[#00A76F]'
-                        : 'text-gray-700 hover:bg-gray-100 hover:text-gray-700',
+                        ? 'bg-primary-50 text-primary-700'
+                        : 'text-gray-700 hover:bg-primary-50 hover:text-gray-700',
                     )}
                     onClick={() => handleMenuSelect(id, true)}
                   >
-                    <Icon className={classNames('mr-2 h-4 w-4 flex-shrink-0', isSelected ? 'text-[#00A76F]' : 'text-gray-400 group-hover:text-gray-500')} />
+                    <Icon className={classNames('mr-2 h-4 w-4 flex-shrink-0', isSelected ? 'text-primary-700' : 'text-gray-400 group-hover:text-gray-500')} />
                     <div className="flex-1">{label}</div>
                     <ChevronRightIcon className={classNames('h-4 w-4 transition-transform', isExpanded ? 'rotate-90' : 'rotate-0')} />
                   </div>
@@ -194,8 +194,8 @@ const Sidebar: FC<ISidebarProps> = ({
                             className={classNames(
                               'group flex items-center rounded-md px-2 py-2 text-sm cursor-pointer',
                               isChildSelected
-                                ? 'bg-primary-50 text-[#00A76F]'
-                                : 'text-gray-600 hover:text-gray-700 hover:bg-gray-50',
+                                ? 'bg-primary-50 text-primary-700'
+                                : 'text-gray-600 hover:text-primary-700 hover:bg-primary-50',
                             )}
                             onClick={() => handleMenuSelect(child.id, false)}
                           >
@@ -228,22 +228,21 @@ const Sidebar: FC<ISidebarProps> = ({
               key={item.id}
               className={classNames(
                 isCurrent
-                  ? 'bg-primary-50 text-primary-600'
-                  : 'text-gray-700 hover:bg-gray-100 hover:text-gray-700',
-                'group flex items-center rounded-md px-2 py-2 text-sm font-medium',
+                  ? 'bg-primary-100 text-primary-700'
+                  : 'text-gray-700 hover:bg-primary-50 hover:text-primary-700',
+                'group flex items-center rounded-md px-2 py-2 text-sm font-medium text-left',
               )}
               onClick={() => onCurrentIdChange(item.id)}
             >
-              <ItemIcon className={classNames('mr-3 flex-shrink-0 self-end translate-y-[2px]', item.id === '-1' ? 'h-8 w-8' : 'h-9 w-9')} />
-              <span className="truncate mr-2">{item.name}</span>
+              <span className="truncate mr-1 flex-1 text-left">{item.name}</span>
               {canDelete && (
                 <button
                   type="button"
-                  className="ml-auto px-2 py-1 rounded hover:bg-gray-200 opacity-0 group-hover:opacity-100"
+                  className="ml-auto px-2 py-1 rounded hover:bg-red-300 opacity-0 group-hover:opacity-100"
                   onClick={(e) => { e.stopPropagation(); onDeleteConversation && onDeleteConversation(item.id) }}
                   aria-label="删除会话"
                 >
-                  <TrashIcon className="h-4 w-4 text-gray-500" />
+                  <TrashIcon className="h-4 w-4 text-gray-700" />
                 </button>
               )}
             </div>
