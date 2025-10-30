@@ -70,12 +70,12 @@ const FileInAttachmentItem = ({
         </div>
         <div className='mr-1 w-0 grow'>
           <div
-            className='system-xs-medium mb-0.5 flex items-center truncate text-text-secondary'
+            className='text-[14px] flex items-center truncate text-gray-500'
             title={file.name}
           >
             <div className='truncate'>{name}</div>
           </div>
-          <div className='system-2xs-medium-uppercase flex items-center text-text-tertiary'>
+          <div className='text-[12px] flex items-center text-gray-300'>
             {
               ext && (
                 <span>{ext.toLowerCase()}</span>
@@ -83,7 +83,7 @@ const FileInAttachmentItem = ({
             }
             {
               ext && (
-                <span className='system-2xs-medium mx-1'>•</span>
+                <span className='system-xs mx-1'>•</span>
               )
             }
             {
@@ -141,7 +141,7 @@ const FileInAttachmentItem = ({
       {
         imagePreviewUrl && canPreview && (
           <ImagePreview
-            title={name}
+
             url={imagePreviewUrl}
             onCancel={() => setImagePreviewUrl('')}
           />

@@ -141,102 +141,126 @@ const Chat: FC<IChatProps> = ({
     handleSend()
   }
 
-  return (
-    <div className={cn(!feedbackDisabled && 'px-3.5', 'h-full')}>
-      {/* Chat List */}
-      <div className="h-full space-y-[30px]">
-        {chatList.map((item) => {
-          if (item.isAnswer) {
-            const isLast = item.id === chatList[chatList.length - 1].id
-            return <Answer
-              key={item.id}
-              item={item}
-              feedbackDisabled={feedbackDisabled}
-              onFeedback={onFeedback}
-              isResponding={isResponding && isLast}
-              suggestionClick={suggestionClick}
-            />
-          }
-          return (
-            <Question
-              key={item.id}
-              id={item.id}
-              content={item.content}
-              useCurrentUserAvatar={useCurrentUserAvatar}
-              imgSrcs={(item.message_files && item.message_files?.length > 0) ? item.message_files.map(item => item.url) : []}
-            />
-          )
-        })}
-      </div>
-      {
-        !isHideSendInput && (
-          <div className='fixed z-10 bottom-0 left-1/2 transform -translate-x-1/2 pc:ml-[122px] tablet:ml-[96px] mobile:ml-0 pc:w-[794px] tablet:w-[794px] max-w-full mobile:w-full px-3.5'>
-            <div className='p-[5.5px] max-h-[150px] bg-white border-[1.5px] border-gray-200 rounded-xl overflow-y-auto'>
-              {
-                visionConfig?.enabled && (
-                  <>
-                    <div className='absolute bottom-2 left-2 flex items-center'>
-                      <ChatImageUploader
-                        settings={visionConfig}
-                        onUpload={onUpload}
-                        disabled={files.length >= visionConfig.number_limits}
-                      />
-                      <div className='mx-1 w-[1px] h-4 bg-black/5' />
-                    </div>
-                    <div className='pl-[52px]'>
-                      <ImageList
-                        list={files}
-                        onRemove={onRemove}
-                        onReUpload={onReUpload}
-                        onImageLinkLoadSuccess={onImageLinkLoadSuccess}
-                        onImageLinkLoadError={onImageLinkLoadError}
-                      />
-                    </div>
-                  </>
-                )
-              }
-              {
-                fileConfig?.enabled && (
-                  <div className={`${visionConfig?.enabled ? 'pl-[52px]' : ''} mb-1`}>
-                    <FileUploaderInAttachmentWrapper
-                      fileConfig={fileConfig}
-                      value={attachmentFiles}
-                      onChange={setAttachmentFiles}
-                    />
-                  </div>
-                )
-              }
+return (
+  <div className={cn(!feedbackDisabled && 'px-3.5', 'h-full')}>
+    {/* Chat List */}
+    <div className="h-full space-y-[30px]">
+      {chatList.map((item) => {
+        if (item.isAnswer) {
+          const isLast = item.id === chatList[chatList.length - 1].id
+          return <Answer
+            key={item.id}
+            item={item}
+            feedbackDisabled={feedbackDisabled}
+            onFeedback={onFeedback}
+            isResponding={isResponding && isLast}
+            suggestionClick={suggestionClick}
+          />
+        }
+        return (
+          <Question
+            key={item.id}
+            id={item.id}
+            content={item.content}
+            useCurrentUserAvatar={useCurrentUserAvatar}
+            imgSrcs={(item.message_files && item.message_files?.length > 0) ? item.message_files.map(item => item.url) : []}
+          />
+        )
+      })}
+    </div>
+
+    {!isHideSendInput && (
+      <div
+        className="fixed z-10 bottom-0 left-1/2 transform -translate-x-1/2 pc:ml-[122px] tablet:ml-[96px] mobile:ml-0 pc:w-[794px] tablet:w-[794px] max-w-full mobile:w-full px-3.5">
+        <div className="relative p-[5.5px] bg-gray-50 border-[1px] border-gray-300 rounded-xl">
+          {/* --- 文件上传部分固定在顶部 --- */}
+          {fileConfig?.enabled && (
+            <div
+              className={`${visionConfig?.enabled ? 'pl-[52px]' : ''} absolute top-0 left-0 w-full bg-gray-50 rounded-t-xl border-b border-gray-200`}
+            >
+              <FileUploaderInAttachmentWrapper
+                fileConfig={fileConfig}
+                value={attachmentFiles}
+                onChange={setAttachmentFiles}
+              />
+            </div>
+          )}
+
+          {/* --- 图片上传部分固定在顶部（在文件上传下方） --- */}
+          {visionConfig?.enabled && (
+            <>
+              <div className="absolute top-[42px] left-2 flex items-center">
+                <ChatImageUploader
+                  settings={visionConfig}
+                  onUpload={onUpload}
+                  disabled={files.length >= visionConfig.number_limits}
+                />
+                <div className="mx-1 w-[1px] h-4 bg-black/5"/>
+              </div>
+              <div className="absolute top-[42px] left-[52px] right-0">
+                <ImageList
+                  list={files}
+                  onRemove={onRemove}
+                  onReUpload={onReUpload}
+                  onImageLinkLoadSuccess={onImageLinkLoadSuccess}
+                  onImageLinkLoadError={onImageLinkLoadError}
+                />
+              </div>
+            </>
+          )}
+
+          {/* --- 输入区（留出顶部空间） --- */}
+          <div
+            className={`flex items-center ${
+              fileConfig?.enabled ? 'mt-[35px]' : visionConfig?.enabled ? 'mt-[35px]' : ''
+            }`}
+          >
+            <div className="flex-grow">
               <Textarea
                 className={`
-                  block w-full px-2 pr-[118px] py-[7px] leading-5 max-h-none text-base text-gray-700 outline-none appearance-none resize-none
-                  ${visionConfig?.enabled && 'pl-12'}
-                `}
+          block w-full px-2 pr-[60px] py-[7px] leading-5 text-base text-gray-700 outline-none appearance-none resize-none
+          ${visionConfig?.enabled && 'pl-12'} max-h-[500px]
+        `}
                 value={query}
                 onChange={handleContentChange}
                 onKeyUp={handleKeyUp}
                 onKeyDown={handleKeyDown}
-                autoSize
+                autoSize={{ minRows: 1, maxRows: 7 }}
               />
-              <div className="absolute top-11 bottom-2 right-5 flex items-center">
-                <div className={`${s.count} mr-3 h-6 leading-6 flex items-center text-sm bg-gray-50 text-gray-500 px-3 rounded`}style={{ transform: 'translateY(2px)' }}>{query.trim().length}</div>
-                <Tooltip
-                  selector='send-tip'
-                  htmlContent={
-                    <div>
-                      <div>{t('common.operation.send')} Enter</div>
-                      <div>{t('common.operation.lineBreak')} Shift Enter</div>
-                    </div>
-                  }
-                >
-                  <div className={`${s.sendBtn} w-8 h-8 cursor-pointer rounded-md`} onClick={handleSend}></div>
-                </Tooltip>
-              </div>
             </div>
           </div>
-        )
-      }
-    </div>
-  )
+
+          {/* --- 右下角发送按钮 --- */}
+          <div className="absolute bottom-2 right-5 flex items-center h-8">
+            <div
+              className={`${s.count} mr-3 h-6 leading-6 flex items-center text-sm bg-gray-50 text-gray-500 px-3 rounded`}
+              style={{transform: 'translateY(2px)'}}
+            >
+              {query.trim().length}
+            </div>
+            <Tooltip
+              selector="send-tip"
+              htmlContent={
+                <div>
+                  <div>{t('common.operation.send')} Enter</div>
+                  <div>{t('common.operation.lineBreak')} Shift Enter</div>
+                </div>
+              }
+            >
+              <div
+                className={`${s.sendBtn} w-8 h-8 cursor-pointer rounded-md`}
+                onClick={handleSend}
+              ></div>
+            </Tooltip>
+          </div>
+        </div>
+
+      </div>
+    )}
+  </div>
+)
+
+
 }
 
 export default React.memo(Chat)
