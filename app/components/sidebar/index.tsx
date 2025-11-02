@@ -251,9 +251,9 @@ const Sidebar: FC<ISidebarProps> = ({
       </nav>
 
       <div className="flex flex-shrink-0 pr-4 pb-4 pl-4">
-        <div className="text-gray-400 font-normal text-xs">
+        <a href="/doc" className="text-gray-400 font-normal text-xs">
           © {copyRight} {(new Date()).getFullYear()}
-        </div>
+        </a>
       </div>
     </div>
   )
