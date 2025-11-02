@@ -79,12 +79,9 @@ const Main: FC<IMainProps> = () => {
       'writing-charts': '【学术写作】图表数据整合支持',
       'writing-references': '【学术写作】参考文献格式化',
 
-      'analysis-requirements': '【数据分析】需求分析',
-      'analysis-adaptation': '【数据分析】数据适配',
-      'analysis-ideas': '【数据分析】思路拆解',
-      'analysis-methods': '【数据分析】方法匹配',
-      'analysis-risk': '【数据分析】风险预测',
-      'analysis-action': '【数据分析】行动落地',
+      'analysis-DataPreprocessing': '【数据分析】数据预处理',
+      'analysis-Methods': '【数据分析】分析方法选择',
+      'analysis-Detailed': '【数据分析】具体分析',
     }
     setChatPrefix(prefixMap[menuId] || '')
   }

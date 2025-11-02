@@ -7,7 +7,7 @@ const docs = [
   { id: 'part3', name: '研究设计' },
   { id: 'part4', name: '学术写作' },
   { id: 'part5', name: '数据分析' },
-  { id: 'readme', name: '更新日志' },
+  { id: 'readme', name: '更新日志' }
 ]
 
 export default function DocsIndex() {

@@ -105,12 +105,9 @@ const assistantMenus = [
     label: '数据分析',
     Icon: DataAnalysisIcon,
     children: [
-      { id: 'analysis-requirements', label: '需求分析' },
-      { id: 'analysis-adaptation', label: '数据适配' },
-      { id: 'analysis-ideas', label: '思路拆解' },
-      { id: 'analysis-methods', label: '方法匹配' },
-      { id: 'analysis-risk', label: '风险预测' },
-      { id: 'analysis-action', label: '行动落地' },
+      { id: 'analysis-DataPreprocessing', label: '数据预处理' },
+      { id: 'analysis-Methods', label: '分析方法选择' },
+      { id: 'analysis-Detailed', label: '具体分析' },
     ],
   },
 ]
