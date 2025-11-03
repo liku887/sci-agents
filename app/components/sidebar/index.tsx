@@ -73,7 +73,7 @@ const assistantMenus = [
     label: '文献综述',
     Icon: LiteratureReviewIcon,
     children: [
-      { id: 'literature-review-guide', label: '文献综述指导' },
+      { id: 'literature-review-guide', label: '文献综述' },
     ],
   },
   {

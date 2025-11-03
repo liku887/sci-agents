@@ -54,8 +54,8 @@ const Main: FC<IMainProps> = () => {
   const handleMenuSelect = (menuId: string) => {
     const prefixMap: Record<string, string> = {
       // 一级菜单
-      'assistant-topic': '文献检索',
-      'assistant-survey': '文献综述',
+      'assistant-topic': 'sudo',
+      'assistant-survey': 'sudo',
       'assistant-design': '研究设计',
       'assistant-writing': '学术写作',
       'assistant-analysis': '数据分析',
