@@ -63,9 +63,8 @@ const assistantMenus = [
     label: '研究选题',
     Icon: ResearchTopicIcon,
     children: [
-      { id: 'topic-query', label: '检索式' },
-      { id: 'topic-plan', label: '检索计划' },
-      { id: 'topic-keywords', label: '关键词与观点' },
+      { id: 'topic-query', label: '文献检索' },
+      { id: 'topic-keywords', label: '文献精读' },
       { id: 'topic-selection', label: '研究选题' },
     ],
   },

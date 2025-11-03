@@ -54,34 +54,33 @@ const Main: FC<IMainProps> = () => {
   const handleMenuSelect = (menuId: string) => {
     const prefixMap: Record<string, string> = {
       // 一级菜单
-      'assistant-topic': '【研究选题】',
-      'assistant-survey': '【文献综述】',
-      'assistant-design': '【研究设计】',
-      'assistant-writing': '【学术写作】',
-      'assistant-analysis': '【数据分析】',
+      'assistant-topic': '文献检索',
+      'assistant-survey': '文献综述',
+      'assistant-design': '研究设计',
+      'assistant-writing': '学术写作',
+      'assistant-analysis': '数据分析',
 
       // 二级菜单
-      'topic-query': '【研究选题】检索式',
-      'topic-plan': '【研究选题】检索计划',
-      'topic-keywords': '【研究选题】关键词与观点',
-      'topic-selection': '【研究选题】研究选题',
+      'topic-query': '文献检索',
+      'topic-keywords': '文献精读',
+      'topic-selection': '研究选题',
 
-      'literature-review-guide': '【文献综述】文献综述指导',
+      'literature-review-guide': '文献综述',
 
-      'design-hypothesis': '【研究设计】假设生成与评估',
-      'design-method': '【研究设计】引导研究设计',
-      'design-validation': '【研究设计】方案验证与优化',
+      'design-hypothesis': '研究设计 假设生成与评估',
+      'design-method': '研究设计 引导研究设计',
+      'design-validation': '研究设计 方案验证与优化',
 
-      'writing-structure': '【学术写作】论文结构规划',
-      'writing-quality': '【学术写作】内容质量诊断',
-      'writing-construction': '【学术写作】论文写作指导',
-      'writing-polish': '【学术写作】论文语句润色',
-      'writing-charts': '【学术写作】图表数据整合支持',
-      'writing-references': '【学术写作】参考文献格式化',
+      'writing-structure': '学术写作 论文结构规划',
+      'writing-quality': '学术写作 内容质量诊断',
+      'writing-construction': '学术写作 论文写作指导',
+      'writing-polish': '学术写作 论文语句润色',
+      'writing-charts': '学术写作 图表数据整合支持',
+      'writing-references': '学术写作 参考文献格式化',
 
-      'analysis-DataPreprocessing': '【数据分析】数据预处理',
-      'analysis-Methods': '【数据分析】分析方法选择',
-      'analysis-Detailed': '【数据分析】具体分析',
+      'analysis-DataPreprocessing': '数据分析 数据预处理',
+      'analysis-Methods': '数据分析 分析方法选择',
+      'analysis-Detailed': '数据分析 具体分析',
     }
     setChatPrefix(prefixMap[menuId] || '')
   }
