@@ -47,10 +47,10 @@ const FileInAttachmentItem = ({
   return (
     <>
       <div className={cn(
-        'flex h-12 items-center rounded-lg border-[0.5px] border-components-panel-border bg-components-panel-on-panel-item-bg pr-3 shadow-xs',
+        'flex h-9 items-center rounded-lg border-[0.5px] border-components-panel-border bg-components-panel-on-panel-item-bg pr-3 shadow-xs',
         progress === -1 && 'border-state-destructive-border bg-state-destructive-hover',
       )}>
-        <div className='flex h-12 w-12 items-center justify-center'>
+        <div className='flex h-9 w-12 items-center justify-center'>
           {
             isImageFile && (
               <FileImageRender
@@ -94,14 +94,14 @@ const FileInAttachmentItem = ({
           </div>
         </div>
         <div className='flex shrink-0 items-center'>
-          {
-            progress >= 0 && !fileIsUploaded(file) && (
-              <ProgressCircle
-                className='mr-2.5'
-                percentage={progress}
-              />
-            )
-          }
+          {progress >= 0 && !fileIsUploaded(file) && (
+            <span className="mr-2.5 h-2 w-2 rounded-full bg-blue-500 animate-pulse"></span>
+          )}
+
+          {/* 上传完成：静态绿点 */}
+          {fileIsUploaded(file) && (
+            <span className="mr-2.5 h-2 w-2 rounded-full bg-green-500"></span>
+          )}
           {
             progress === -1 && (
               <ActionButton

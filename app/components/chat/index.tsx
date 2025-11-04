@@ -171,7 +171,7 @@ return (
 
     {!isHideSendInput && (
       <div
-        className="fixed z-10 bottom-0 left-1/2 transform -translate-x-1/2 pc:ml-[122px] tablet:ml-[96px] mobile:ml-0 pc:w-[794px] tablet:w-[794px] max-w-full mobile:w-full px-3.5">
+        className="fixed z-10 bottom-0 left-1/2 transform -translate-x-1/2 pc:ml-[122px] tablet:ml-[96px] mobile:ml-0 pc:w-[794px] tablet:w-[794px] max-w-full mobile:w-full px-3.5 ">
         <div className="relative p-[5.5px] bg-gray-50 border-[1px] border-gray-300 rounded-xl">
           {/* --- 文件上传部分固定在顶部 --- */}
           {fileConfig?.enabled && (

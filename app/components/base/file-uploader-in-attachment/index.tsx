@@ -77,7 +77,7 @@ const FileUploaderInAttachment = ({
       <div className='flex items-center space-x-1'>
         {options.map(renderOption)}
       </div>
-      <div className='mt-1 space-y-1 flex-grow'>
+      <div className='mt-1 space-y-0 flex-grow max-h-9 overflow-y-auto'>
         {
           files.map(file => (
             <FileItem
