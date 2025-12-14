@@ -2,19 +2,10 @@ import React from 'react'
 import type { FC } from 'react'
 import { useTranslation } from 'react-i18next'
 import {
-  ChatBubbleOvalLeftEllipsisIcon,
-  PencilSquareIcon,
   TrashIcon,
   ChevronRightIcon,
 } from '@heroicons/react/24/outline'
-import {
-  ChatBubbleOvalLeftEllipsisIcon as ChatBubbleOvalLeftEllipsisSolidIcon,
-  LightBulbIcon,
-  MagnifyingGlassCircleIcon,
-  BeakerIcon,
-  DocumentTextIcon,
-  ChartBarIcon,
-} from '@heroicons/react/24/solid'
+
 import Button from '@/app/components/base/button'
 import type { ConversationItem } from '@/types/app'
 import s from './style.module.css'
@@ -131,17 +122,40 @@ const Sidebar: FC<ISidebarProps> = ({
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     ))
   }
+  const [showTip, setShowTip] = React.useState(false)
+  const [tipText, setTipText] = React.useState('')
 
   const handleMenuSelect = (id: string, isParent: boolean) => {
     setSelectedMenuId(id)
     if (isParent) {
       toggleAssistantExpand(id)
+    } else {
+    // ✅ 二级菜单：弹出提示
+      const findLabel = () => {
+        for (const menu of assistantMenus) {
+          const child = menu.children?.find(c => c.id === id)
+          if (child) { return child.label }
+        }
+        return ''
+      }
+      const label = findLabel()
+      setTipText(`已切换至「${label}」功能`)
+      setShowTip(true)
+      // 自动关闭
+      setTimeout(() => setShowTip(false), 2000)
     }
     onMenuSelect && onMenuSelect(id)
   }
 
   return (
     <div className="shrink-0 flex flex-col overflow-y-auto bg-white pc:w-[244px] tablet:w-[192px] mobile:w-[240px] border-r border-gray-200 tablet:h-[calc(100vh_-_3rem)] mobile:h-screen">
+      {showTip && (
+        <div className="fixed top-4 right-4 z-50">
+          <div className="rounded-md bg-primary-600 px-4 py-2 text-sm text-white shadow-lg">
+            {tipText}
+          </div>
+        </div>
+      )}
       {/* 新建对话按钮 */}
       {list.length < MAX_CONVERSATION_LENTH && (
         <div className="flex flex-shrink-0 p-4 !pb-0">
